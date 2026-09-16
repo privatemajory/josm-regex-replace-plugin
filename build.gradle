@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    // Put josm-tested.jar (or josm-custom.jar) in libs/ before building.
+    // Easiest source: your existing JOSM install directory, or
+    // https://josm.openstreetmap.de/download/ (josm-tested.jar).
+    compileOnly files('libs/josm-tested.jar')
+}
+
+jar {
+    archiveFileName = 'regexreplace.jar'
+    manifest {
+        attributes(
+            'Plugin-Class'      : 'org.example.josmregexreplace.RegexReplacePlugin',
+            'Plugin-Version'    : version,
+            'Plugin-Description': 'Search and replace tag values using a regular expression',
+            'Plugin-Mainversion': '18000',
+            'Author'            : 'Your Name'
+        )
+    }
+}
