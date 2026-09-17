@@ -79,3 +79,23 @@ gradle test
 The tests cover replacement semantics, modes, flags, empty-value policy, and
 the pure transformation boundaries. JOSM UI and dataset integration tests
 require a running JOSM environment and are kept separate from the headless suite.
+
+## Release (external publishing)
+
+This plugin is published externally: the jar is hosted on GitHub Releases and
+listed on the JOSM wiki `Plugins` page. JOSM installs and updates it directly
+from the release asset via the manifest's `<mainversion>_Plugin-Url` entry
+(templated from `version` in `build.gradle`, so the two can't drift).
+
+1. Bump `version` in `build.gradle` (e.g. `version = '1.0.1'`).
+2. Commit, then tag and push: `git tag v1.0.1 && git push origin v1.0.1`
+   (the tag must be `v` + the exact version — the workflow fails otherwise).
+3. The `Release` workflow builds, tests, and attaches `regexreplace.jar`
+   to the GitHub Release.
+4. Smoke-test the asset: drop it into JOSM's plugins folder on the oldest
+   JOSM you claim (`Plugin-Mainversion`, currently 19000) and on current,
+   then check install + update + undo.
+5. Update (or create) the entry on https://josm.openstreetmap.de/wiki/Plugins
+   with the new version and the asset URL:
+   `https://github.com/privatemajory/josm-regex-replace-plugin/releases/download/v1.0.1/regexreplace.jar`
+   JOSM picks the update up from there.
