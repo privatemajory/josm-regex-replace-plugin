@@ -23,6 +23,12 @@ dependencies {
     // Easiest source: your existing JOSM install directory, or
     // https://josm.openstreetmap.de/download/ (josm-tested.jar).
     compileOnly files('libs/josm-tested.jar')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.12.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.12.2'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 jar {
@@ -33,7 +39,7 @@ jar {
             'Plugin-Version'    : version,
             'Plugin-Description': 'Search and replace tag values using a regular expression',
             'Plugin-Mainversion': '18000',
-            'Author'            : 'Your Name'
+            'Author'            : 'Dolly Andriatsiferana'
         )
     }
 }

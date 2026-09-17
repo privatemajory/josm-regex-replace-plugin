@@ -1,10 +1,9 @@
 # JOSM Regex Replace Plugin
 
 Adds a **"Regex Search/Replace…"** item to JOSM's **More tools** menu.
-It lets you pick a tag key, a Java-regex "find" pattern, and a replacement
-(capture groups like `$1` are supported), shows a preview table of every
-value that would change, and — on confirmation — applies the change as a
-single, normal, undoable edit (`Ctrl+Z` works).
+It supports regex, literal, whole-value, conditional, and multi-key replacement;
+shows a live, sortable preview; is available from the toolbar; and applies
+selected changes as one undoable edit.
 
 Unlike JOSM's built-in `name~"..."` search operator (which requires the
 regex to match the *entire* tag value), this plugin uses standard
@@ -27,7 +26,7 @@ wrapper first if you don't have Gradle installed globally).
    ```
    gradle jar
    ```
-   The plugin jar will appear at `build/libs/RegexReplace-1.0.0.jar`.
+   The plugin jar will appear at `build/libs/regexreplace.jar`.
 
 Note: the exact method signatures for `JosmAction`, `ChangePropertyCommand`,
 etc. can shift slightly between JOSM releases. If the build fails with a
@@ -53,8 +52,30 @@ the plugin manager, JOSM just needs to see the jar and load it once).
 1. Select the objects you want to affect (or leave "Selected objects only"
    unchecked to scan every object with that tag key in the layer).
 2. **More tools → Regex Search/Replace…**
-3. Fill in the tag key (e.g. `name`), the find pattern (e.g.
-   `^District d(e |')`), and the replacement (e.g. empty string to strip
-   the prefix, or `District: ` to reformat it).
-4. Review the preview table, click OK to apply.
-5. `Ctrl+Z` undoes it like any other edit if something looks wrong.
+3. Choose a key operation: replace in place, rename to a destination key, or
+   copy to a destination key. Multiple source keys may be comma-separated, and
+   **All existing tags** can be used for source selection.
+4. Optionally restrict by primitive type, selection, JOSM search expression,
+   condition tag/regex, or minimum/maximum matches per value. Missing source
+   tags can be created from an empty value when explicitly enabled.
+5. Review the highlighted preview. Empty results delete the tag by default;
+   enable **Keep empty tag values** or **Prevent empty result** as appropriate.
+6. Use **Export CSV** for a non-mutating review, or **Apply**
+   to create one undoable edit. `Ctrl+Z` undoes it like any other edit.
+
+The dialog remembers the last operation, supports named presets, and keeps up to
+ten recent operations.
+Preview rows are capped at 5,000; narrow the scope before applying a truncated
+preview. Large operations require an additional confirmation.
+
+## Test
+
+Run the headless unit suite with:
+
+```
+gradle test
+```
+
+The tests cover replacement semantics, modes, flags, empty-value policy, and
+the pure transformation boundaries. JOSM UI and dataset integration tests
+require a running JOSM environment and are kept separate from the headless suite.

@@ -1,6 +1,12 @@
-.gradle
+# Gradle build outputs
+.gradle/
 **/build/
-!src/**/build/
+bin/
+tmp-compile/
+out/
+
+# Compiled classes (never commit build artifacts)
+*.class
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -8,15 +14,34 @@ gradle-app.setting
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 
-# Avoid ignore Gradle wrappper properties
+# Avoid ignoring Gradle wrapper properties
 !gradle-wrapper.properties
 
 # Cache of project
 .gradletasknamecache
 
-# Eclipse Gradle plugin generated files
-# Eclipse Core
+# Local Gradle overrides at repo root only (personal proxies, signing creds).
+# Scoped with a leading slash so project-level gradle.properties files
+# in subdirectories stay tracked.
+/gradle.properties
+
+# Eclipse
 .project
-# JDT-specific (Eclipse Java Development Tools)
 .classpath
-gradle.properties
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Logs and editor backups
+*.log
+*.orig
+*~
+/.vscode
