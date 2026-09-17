@@ -35,7 +35,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       - name: Build and test
-        run: ./gradlew jar test
+        run: bash ./gradlew jar test
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
