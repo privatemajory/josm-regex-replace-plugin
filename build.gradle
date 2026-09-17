@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'org.example'
-version = '1.0.0'
+version = '1.0.1'
 
 // Single source of truth for publishing: Plugin-Mainversion and the
 // _Plugin-Url download entry below are derived from these two values,
